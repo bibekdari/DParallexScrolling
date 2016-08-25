@@ -11,7 +11,13 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var parentScrollView: UIScrollView!
-    @IBOutlet weak var childScrollView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
+    
+    var childScrollView: UIScrollView {
+        return tableView
+    }
+    
+    let person: [String] = ["Bean", "Roy",  "Beard", "Charles A. Beaumont and Fletcher", "Beck", "Glenn", "Becker", "Carl", "Beckett", "Samuel", "Beddoes", "Mick", "Beecher", "Henry Ward", "Beethoven", "Ludwig van"]
     
     var goingUp: Bool?
     
@@ -20,7 +26,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         parentScrollView.delegate = self
-        childScrollView.delegate = self
+        tableView.delegate = self
+        tableView.dataSource = self
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -28,32 +35,38 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 
 extension ViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 50
+        return person.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = "CELL NO \(indexPath.row)"
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        cell.textLabel?.text = "#\(indexPath.row)"
+        cell.detailTextLabel?.text = person[indexPath.row]
         return cell
     }
 }
 
 extension ViewController: UITableViewDelegate {
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        goingUp = scrollView.panGestureRecognizer.translationInView(scrollView).y < 0
-        if goingUp! {
-            if scrollView == childScrollView {
-                if parentScrollView.contentOffset.y + parentScrollView.frame.height < parentScrollView.contentSize.height {
-                    parentScrollView.contentOffset.y = min(parentScrollView.contentOffset.y + childScrollView.contentOffset.y, parentScrollView.contentSize.height - parentScrollView.frame.height)
-                    childScrollView.contentOffset.y = 0
-                }
-            }
-        }
-    }
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        goingUp = scrollView.panGestureRecognizer.translationInView(scrollView).y < 0
+//        let parentViewMaxContentYOffset = parentScrollView.contentSize.height - parentScrollView.frame.height
+//        if goingUp! {
+//            if scrollView == childScrollView {
+//                if parentScrollView.contentOffset.y + parentScrollView.frame.height < parentScrollView.contentSize.height {
+//                    parentScrollView.contentOffset.y = min(parentScrollView.contentOffset.y + childScrollView.contentOffset.y, parentViewMaxContentYOffset)
+//                    childScrollView.contentOffset.y = 0
+//                }
+//            }
+//        } else {
+//            if scrollView == childScrollView {
+//                if childScrollView.contentOffset.y < 0 && parentScrollView.contentOffset.y > 0 {
+//                    parentScrollView.contentOffset.y = max(parentScrollView.contentOffset.y - abs(childScrollView.contentOffset.y), 0)
+//                }
+//            }
+//        }
+//    }
 }
