@@ -23,13 +23,18 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CCe-Vt-jRy">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img" translatesAutoresizingMaskIntoConstraints="NO" id="nGR-we-obs">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img" translatesAutoresizingMaskIntoConstraints="NO" id="nGR-we-obs">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="225"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="225" id="tbp-eC-Rl6"/>
                                                 </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="tbp-eC-Rl6"/>
+                                                    </mask>
+                                                </variation>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu" translatesAutoresizingMaskIntoConstraints="NO" id="CV7-yF-dhP">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu" translatesAutoresizingMaskIntoConstraints="NO" id="CV7-yF-dhP">
                                                 <rect key="frame" x="0.0" y="225" width="375" height="75"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="75" id="RuV-GF-bpJ"/>
@@ -49,7 +54,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="d7d-hY-lur">
-                                        <rect key="frame" x="0.0" y="300" width="375" height="592"/>
+                                        <rect key="frame" x="0.0" y="300" width="375" height="572"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" textLabel="2MK-t3-Ow5" detailTextLabel="ndn-fH-EwU" style="IBUITableViewCellStyleValue2" id="X0m-3D-ne2">
@@ -101,7 +106,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="d7d-hY-lur" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" constant="-75" id="5ix-sN-5xZ"/>
+                            <constraint firstItem="d7d-hY-lur" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" constant="-95" id="5ix-sN-5xZ"/>
                             <constraint firstAttribute="trailing" secondItem="IZu-XF-qnH" secondAttribute="trailing" id="8C4-4U-vLl"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="IZu-XF-qnH" secondAttribute="bottom" id="BDl-fD-o0k"/>
                             <constraint firstItem="IZu-XF-qnH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CEH-v1-dcD"/>
@@ -109,6 +114,7 @@
                             <constraint firstItem="IZu-XF-qnH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="sdI-WF-hMT"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="parentScrollView" destination="IZu-XF-qnH" id="uRA-rx-aIy"/>

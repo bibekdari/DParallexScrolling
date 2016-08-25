@@ -17,9 +17,10 @@ class ViewController: UIViewController {
         return tableView
     }
     
-    let person: [String] = ["Bean", "Roy",  "Beard", "Charles A. Beaumont and Fletcher", "Beck", "Glenn", "Becker", "Carl", "Beckett", "Samuel", "Beddoes", "Mick", "Beecher", "Henry Ward", "Beethoven", "Ludwig van"]
+    let person: [String] = ["Bean", "Roy",  "Beard", "Charles A. Beaumont and Fletcher", "Beck", "Glenn", "Becker", "Carl", "Beckett", "Samuel", "Beddoes", "Mick", "Beecher", "Henry Ward", "Beethoven", "Ludwig van", "Bean", "Roy",  "Beard", "Charles A. Beaumont and Fletcher", "Beck", "Glenn", "Becker", "Carl", "Beckett", "Samuel", "Beddoes", "Mick", "Beecher", "Henry Ward", "Beethoven", "Ludwig van"]
     
     var goingUp: Bool?
+    var childScrollingDownDueToParent = false
     
     let fixedHeight: CGFloat = 25
     
@@ -51,22 +52,31 @@ extension ViewController: UITableViewDataSource {
 }
 
 extension ViewController: UITableViewDelegate {
-//    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        goingUp = scrollView.panGestureRecognizer.translationInView(scrollView).y < 0
-//        let parentViewMaxContentYOffset = parentScrollView.contentSize.height - parentScrollView.frame.height
-//        if goingUp! {
-//            if scrollView == childScrollView {
-//                if parentScrollView.contentOffset.y + parentScrollView.frame.height < parentScrollView.contentSize.height {
-//                    parentScrollView.contentOffset.y = min(parentScrollView.contentOffset.y + childScrollView.contentOffset.y, parentViewMaxContentYOffset)
-//                    childScrollView.contentOffset.y = 0
-//                }
-//            }
-//        } else {
-//            if scrollView == childScrollView {
-//                if childScrollView.contentOffset.y < 0 && parentScrollView.contentOffset.y > 0 {
-//                    parentScrollView.contentOffset.y = max(parentScrollView.contentOffset.y - abs(childScrollView.contentOffset.y), 0)
-//                }
-//            }
-//        }
-//    }
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        goingUp = scrollView.panGestureRecognizer.translationInView(scrollView).y < 0
+        let parentViewMaxContentYOffset = parentScrollView.contentSize.height - parentScrollView.frame.height
+        if goingUp! {
+            if scrollView == childScrollView {
+                if parentScrollView.contentOffset.y + parentScrollView.frame.height < parentScrollView.contentSize.height && !childScrollingDownDueToParent {
+                    parentScrollView.contentOffset.y = min(parentScrollView.contentOffset.y + childScrollView.contentOffset.y, parentViewMaxContentYOffset)
+                    childScrollView.contentOffset.y = 0
+                }
+            }
+        } else {
+            if scrollView == childScrollView {
+                if childScrollView.contentOffset.y < 0 && parentScrollView.contentOffset.y > 0 {
+                    parentScrollView.contentOffset.y = max(parentScrollView.contentOffset.y - abs(childScrollView.contentOffset.y), 0)
+                }
+            }
+            
+            if scrollView == parentScrollView {
+                if childScrollView.contentOffset.y > 0 && parentScrollView.contentOffset.y < parentViewMaxContentYOffset {
+                    childScrollingDownDueToParent = true
+                    childScrollView.contentOffset.y = max(childScrollView.contentOffset.y - (parentViewMaxContentYOffset - parentScrollView.contentOffset.y), 0)
+                    parentScrollView.contentOffset.y = parentViewMaxContentYOffset
+                    childScrollingDownDueToParent = false
+                }
+            }
+        }
+    }
 }
