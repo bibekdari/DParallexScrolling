@@ -67,7 +67,8 @@ extension ViewController: UITableViewDelegate {
                     
                     // change parent scrollView contentOffset y which is equal to minimum between maximum y offset that parent scrollView can have and sum of parentScrollView's content's y offset and child's y content offset. Because, we don't want parent scrollView go above sticked menu.
                     // Scroll parent scrollview upwards as much as child scrollView is scrolled
-                    parentScrollView.contentOffset.y = min(parentScrollView.contentOffset.y + childScrollView.contentOffset.y, parentViewMaxContentYOffset)
+                    // Sometimes parent scrollView goes in the middle of screen and stucks there so max is used.
+                    parentScrollView.contentOffset.y = max(min(parentScrollView.contentOffset.y + childScrollView.contentOffset.y, parentViewMaxContentYOffset), 0)
                     
                     // change child scrollView's content's y offset to 0 because we are scrolling parent scrollView instead with same content offset change.
                     childScrollView.contentOffset.y = 0
